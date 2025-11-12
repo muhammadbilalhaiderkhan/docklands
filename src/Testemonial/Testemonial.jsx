@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -31,40 +32,13 @@ export default function Testimonial() {
       rating: 5,
       feedback: "Life Changing",
     },
-    {
-      name: "Emily Chen",
-      role: "Health Coach",
-      text: "The nutrition counseling program is evidence-based and practical. Their nutritionist understood my goals and created a sustainable plan. Results came quickly and lasted!",
-      avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
-      rating: 5,
-      feedback: "Professional Team",
-    },
-    {
-      name: "David Martinez",
-      role: "Professional Athlete",
-      text: "As an athlete, I trusted Docklands Health with my recovery. Their comprehensive approach and attention to detail are unmatched. They got me back in the game stronger than ever!",
-      avatar: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400",
-      rating: 5,
-      feedback: "Top Tier Care",
-    },
-    {
-      name: "Lisa Watson",
-      role: "Wellness Advocate",
-      text: "What impressed me most was the holistic approach. They didn't just treat symptoms; they addressed root causes. The whole team is passionate and knowledgeable!",
-      avatar: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400",
-      rating: 5,
-      feedback: "Highly Professional",
-    },
   ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -74,7 +48,6 @@ export default function Testimonial() {
 
   return (
     <section className="relative py-32 bg-gradient-to-b from-white via-[#00b8e6]/2 to-white overflow-hidden">
-      {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#00b8e6]/8 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#00b8e6]/8 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -128,10 +101,8 @@ export default function Testimonial() {
               pauseOnMouseEnter: true,
             }}
             loop={true}
-            fadeEffect={{
-              crossFade: true,
-            }}
-            className="testimonials-swiper"
+            fadeEffect={{ crossFade: true }}
+            onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index} className="pb-8">
@@ -141,15 +112,20 @@ export default function Testimonial() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-shadow duration-500 border border-gray-100 overflow-hidden">
+                  <div className="bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-shadow duration-500 border border-gray-100 overflow-hidden relative">
                     {/* Gradient background decoration */}
                     <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#00b8e6]/10 to-transparent rounded-bl-full"></div>
 
                     <div className="relative p-12 lg:p-16">
                       {/* Quote Icon */}
-                      <div className="absolute top-8 left-8 w-12 h-12 bg-[#00b8e6]/10 rounded-full flex items-center justify-center">
+                      <motion.div
+                        className="absolute top-8 left-8 w-12 h-12 bg-[#00b8e6]/10 rounded-full flex items-center justify-center"
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                      >
                         <Quote className="w-6 h-6 text-[#00b8e6]" />
-                      </div>
+                      </motion.div>
 
                       {/* Testimonial Text */}
                       <p className="text-gray-700 text-lg lg:text-2xl leading-relaxed mb-10 font-light italic">
@@ -216,63 +192,21 @@ export default function Testimonial() {
             {testimonials.map((_, index) => (
               <motion.div
                 key={index}
-                className="h-2 rounded-full bg-gray-300 cursor-pointer transition-all duration-300 hover:bg-[#00b8e6]"
+                className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${
+                  index === activeIndex ? "bg-[#00b8e6] w-8" : "bg-gray-300 w-4"
+                }`}
                 whileHover={{ scale: 1.2 }}
-                initial={{ width: 8 }}
-                animate={{ width: 8 }}
               />
             ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Stats Section */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-24"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className="bg-gradient-to-br from-[#00b8e6] to-[#0097c4] rounded-2xl p-8 text-white text-center shadow-xl"
-            variants={itemVariants}
-            whileHover={{ y: -5 }}
-          >
-            <h3 className="text-5xl font-bold mb-2">10,000+</h3>
-            <p className="text-white/90 font-medium">Happy Patients</p>
-          </motion.div>
-
-          <motion.div
-            className="bg-gradient-to-br from-[#00b8e6] to-[#0097c4] rounded-2xl p-8 text-white text-center shadow-xl"
-            variants={itemVariants}
-            whileHover={{ y: -5 }}
-          >
-            <h3 className="text-5xl font-bold mb-2">4.9/5</h3>
-            <p className="text-white/90 font-medium">Average Rating</p>
-          </motion.div>
-
-          <motion.div
-            className="bg-gradient-to-br from-[#00b8e6] to-[#0097c4] rounded-2xl p-8 text-white text-center shadow-xl"
-            variants={itemVariants}
-            whileHover={{ y: -5 }}
-          >
-            <h3 className="text-5xl font-bold mb-2">98%</h3>
-            <p className="text-white/90 font-medium">Satisfaction Rate</p>
           </motion.div>
         </motion.div>
       </div>
 
       <style>{`
-        .testimonials-swiper {
-          padding: 40px 20px;
-          overflow: visible;
-        }
-
         .swiper-slide {
           opacity: 0.3;
           transition: opacity 0.5s ease;
         }
-
         .swiper-slide-active {
           opacity: 1;
         }

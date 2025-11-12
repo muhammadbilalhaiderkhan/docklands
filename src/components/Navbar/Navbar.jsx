@@ -27,30 +27,27 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-lg shadow-black/5 py-3'
+          ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3'
           : 'bg-white backdrop-blur-md py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 lg:px-8">
-        <a
-          href="#"
-          className="relative z-10 transition-transform duration-300 hover:scale-105"
-        >
+        {/* Logo */}
+        <a href="#" className="relative z-10 transition-transform duration-300 hover:scale-105">
           <img
             src={docklandslogo}
             alt="Docklands Logo"
-            className={`h-auto object-contain transition-all duration-300 ${
-              scrolled ? 'w-32' : 'w-36'
-            }`}
+            className={`h-auto object-contain transition-all duration-300 ${scrolled ? 'w-32' : 'w-36'}`}
           />
         </a>
 
-        <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+        {/* Desktop Links */}
+        <nav className="hidden lg:flex items-center space-x-2">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="relative px-4 py-2 text-[#003366] font-medium text-[15px] tracking-wide group overflow-hidden"
+              className="relative px-4 py-2 text-[#003366] font-medium text-sm tracking-wide group overflow-hidden"
             >
               <span className="relative z-10 transition-colors duration-300 group-hover:text-[#0099cc]">
                 {link.name}
@@ -60,6 +57,7 @@ export default function Navbar() {
           ))}
         </nav>
 
+        {/* Desktop CTA */}
         <a
           href="#book"
           className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-[#0099cc] to-[#00b8e6] hover:from-[#007fa3] hover:to-[#0099cc] text-white px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg shadow-[#0099cc]/30 hover:shadow-xl hover:shadow-[#0099cc]/40 hover:-translate-y-0.5 group"
@@ -68,6 +66,7 @@ export default function Navbar() {
           <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
         </a>
 
+        {/* Mobile Menu Button */}
         <button
           className="lg:hidden relative z-10 text-[#003366] p-2 rounded-lg hover:bg-gray-100/80 transition-colors duration-200"
           onClick={() => setOpen(!open)}
@@ -77,13 +76,12 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-          open ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${open ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-2xl">
-          <div className="flex flex-col px-6 py-6 space-y-1">
+          <div className="flex flex-col px-6 py-6 space-y-2">
             {navLinks.map((link, index) => (
               <a
                 key={link.name}
@@ -114,6 +112,7 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Slide-in Animation */}
       <style>{`
         @keyframes slideIn {
           from {
